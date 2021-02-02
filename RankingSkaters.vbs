@@ -180,6 +180,13 @@ Sub RankingSkaters()
     
     Next i
     
+    'Sort values by average fantasy points
+    Range(Cells(1, 1), Cells(PlayerCount + 1, 15)).Sort Key1:=Range("N1"), Order1:=xlDescending, Header:=xlYes
+    
+    'Format values to one decimal point
+    Range("D2", Cells(PlayerCount + 1, 15)).NumberFormat = "####.#"
+
+    
 End Sub
 
 'Creating function to calculate standard deviation
