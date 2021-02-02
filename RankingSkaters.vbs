@@ -154,29 +154,29 @@ Sub RankingSkaters()
     Cells(1, 11).Value = "FP Year 1"
     Cells(1, 12).Value = "FP Year 2"
     Cells(1, 13).Value = "FP Year 3"
-    Cells(1, 14).Value = "FP Average"
+    Cells(1, 14).Value = "Weighted FP"
     Cells(1, 15).Value = "FP Std Dev"
     Range("1:1").Rows.Font.Bold = True
     
-    'Print names and average stats into Rankings tab
+    'Print names and weighted average stats into Rankings tab
     For i = 0 To (PlayerCount - 1)
         
         Cells(i + 2, 1).Value = PlayerName(i)
         Cells(i + 2, 2).Value = PlayerTeam(i)
         Cells(i + 2, 3).Value = PlayerPosition(i)
-        Cells(i + 2, 4).Value = (PlayerGamesYear1(i) + PlayerGamesYear2(i) + PlayerGamesYear3(i)) / 3
-        Cells(i + 2, 5).Value = (PlayerGoalsYear1(i) + PlayerGoalsYear2(i) + PlayerGoalsYear3(i)) / 3
-        Cells(i + 2, 6).Value = (PlayerAssistsYear1(i) + PlayerAssistsYear2(i) + PlayerAssistsYear3(i)) / 3
-        Cells(i + 2, 7).Value = (PlayerPlusMinusYear1(i) + PlayerPlusMinusYear2(i) + PlayerPlusMinusYear3(i)) / 3
-        Cells(i + 2, 8).Value = (PlayerSOGYear1(i) + PlayerSOGYear2(i) + PlayerSOGYear3(i)) / 3
-        Cells(i + 2, 9).Value = (PlayerPPPointsYear1(i) + PlayerPPPointsYear2(i) + PlayerPPPointsYear3(i)) / 3
-        Cells(i + 2, 10).Value = (PlayerHitsYear1(i) + PlayerHitsYear2(i) + PlayerHitsYear3(i)) / 3
+        Cells(i + 2, 4).Value = PlayerGamesYear1(i) * 0.5 + PlayerGamesYear2(i) * 0.3 + PlayerGamesYear3(i) * 0.2
+        Cells(i + 2, 5).Value = PlayerGoalsYear1(i) * 0.5 + PlayerGoalsYear2(i) * 0.3 + PlayerGoalsYear3(i) * 0.2
+        Cells(i + 2, 6).Value = PlayerAssistsYear1(i) * 0.5 + PlayerAssistsYear2(i) * 0.3 + PlayerAssistsYear3(i) * 0.2
+        Cells(i + 2, 7).Value = PlayerPlusMinusYear1(i) * 0.5 + PlayerPlusMinusYear2(i) * 0.3 + PlayerPlusMinusYear3(i) * 0.2
+        Cells(i + 2, 8).Value = PlayerSOGYear1(i) * 0.5 + PlayerSOGYear2(i) * 0.3 + PlayerSOGYear3(i) * 0.2
+        Cells(i + 2, 9).Value = PlayerPPPointsYear1(i) * 0.5 + PlayerPPPointsYear2(i) * 0.3 + PlayerPPPointsYear3(i) * 0.2
+        Cells(i + 2, 10).Value = PlayerHitsYear1(i) * 0.5 + PlayerHitsYear2(i) * 0.3 + PlayerHitsYear3(i) * 0.2
         
         'Print fantasy point calculations for each year, then the average and standard deviation
         Cells(i + 2, 11).Value = PlayerGoalsYear1(i) * Sheets("Info").Cells(16, 1).Value + PlayerAssistsYear1(i) * Sheets("Info").Cells(16, 2).Value + PlayerPlusMinusYear1(i) * Sheets("Info").Cells(16, 3).Value + PlayerSOGYear1(i) * Sheets("Info").Cells(16, 4).Value + PlayerPPPointsYear1(i) * Sheets("Info").Cells(16, 5).Value + PlayerHitsYear1(i) * Sheets("Info").Cells(16, 6).Value
         Cells(i + 2, 12).Value = PlayerGoalsYear2(i) * Sheets("Info").Cells(16, 1).Value + PlayerAssistsYear2(i) * Sheets("Info").Cells(16, 2).Value + PlayerPlusMinusYear2(i) * Sheets("Info").Cells(16, 3).Value + PlayerSOGYear2(i) * Sheets("Info").Cells(16, 4).Value + PlayerPPPointsYear2(i) * Sheets("Info").Cells(16, 5).Value + PlayerHitsYear2(i) * Sheets("Info").Cells(16, 6).Value
         Cells(i + 2, 13).Value = PlayerGoalsYear3(i) * Sheets("Info").Cells(16, 1).Value + PlayerAssistsYear3(i) * Sheets("Info").Cells(16, 2).Value + PlayerPlusMinusYear3(i) * Sheets("Info").Cells(16, 3).Value + PlayerSOGYear3(i) * Sheets("Info").Cells(16, 4).Value + PlayerPPPointsYear3(i) * Sheets("Info").Cells(16, 5).Value + PlayerHitsYear3(i) * Sheets("Info").Cells(16, 6).Value
-        Cells(i + 2, 14).Value = (Cells(i + 2, 11).Value + Cells(i + 2, 12).Value + Cells(i + 2, 13).Value) / 3
+        Cells(i + 2, 14).Value = Cells(i + 2, 11).Value * 0.5 + Cells(i + 2, 12).Value * 0.3 + Cells(i + 2, 13).Value * 0.2
         Cells(i + 2, 15).Value = StDev(Range(Cells(i + 2, 11), Cells(i + 2, 13)))
     
     Next i
@@ -244,7 +244,7 @@ Sub Refilter()
     ReDim PlayerFPStdDev(PlayerCount)
     ReDim PlayerPPPointsYear2(PlayerCount)
     
-    'Loop through players and save their names and stats into arrays if their name is not highlighted yellow
+    'Loop through players and save their names and stats into arrays if their name is not highlighted red
     Dim i As Integer
     i = 0
     
@@ -252,7 +252,7 @@ Sub Refilter()
     
     While ActiveCell.Value <> vbNullString
         
-        If ActiveCell.Interior.Color <> vbYellow Then
+        If ActiveCell.Interior.Color <> vbRed Then
             
             PlayerName(i) = ActiveCell.Value
             PlayerTeam(i) = ActiveCell.Offset(0, 1).Value
@@ -298,7 +298,7 @@ Sub Refilter()
     Cells(1, 11).Value = "FP Year 1"
     Cells(1, 12).Value = "FP Year 2"
     Cells(1, 13).Value = "FP Year 3"
-    Cells(1, 14).Value = "FP Average"
+    Cells(1, 14).Value = "Weighted FP"
     Cells(1, 15).Value = "FP Std Dev"
     Range("1:1").Rows.Font.Bold = True
     
