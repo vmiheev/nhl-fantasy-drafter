@@ -8,7 +8,6 @@ Sub RankingSkaters()
     Dim PlayerCount As Integer
     
     PlayerCount = Cells(Rows.Count, "A").End(xlUp).Row - 1
-    'MsgBox ("There are " & PlayerCount & " skaters.")
     
     'Declare the arrays for player names and stats
     Dim PlayerName() As String
@@ -138,8 +137,9 @@ Sub RankingSkaters()
         
     Next j
 
-    'Create column headers for Rankings tab
+    'Switch to Rankings tab, clear previous contents and create column headers for Rankings tab
     Worksheets("Rankings").Activate
+    Cells.Clear
     
     Cells(1, 1).Value = "Name"
     Cells(1, 2).Value = "Team"
@@ -156,6 +156,7 @@ Sub RankingSkaters()
     Cells(1, 13).Value = "FP Year 3"
     Cells(1, 14).Value = "FP Average"
     Cells(1, 15).Value = "FP Std Dev"
+    Range("1:1").Rows.Font.Bold = True
     
     'Print names and average stats into Rankings tab
     For i = 0 To (PlayerCount - 1)
@@ -183,9 +184,12 @@ Sub RankingSkaters()
     'Sort values by average fantasy points
     Range(Cells(1, 1), Cells(PlayerCount + 1, 15)).Sort Key1:=Range("N1"), Order1:=xlDescending, Header:=xlYes
     
-    'Format values to one decimal point
-    Range("D2", Cells(PlayerCount + 1, 15)).NumberFormat = "####.#"
-
+    'Format values to whole numbers freeze top row & AutoFit columns
+    Range("D2", Cells(PlayerCount + 1, 15)).NumberFormat = "###0"
+    Range("A:O").Columns.AutoFit
+    Rows("2:2").Select
+    ActiveWindow.FreezePanes = True
+    Cells(1, 1).Activate
     
 End Sub
 
@@ -195,3 +199,135 @@ Function StDev(Rng As Range)
     StDev = Application.WorksheetFunction.StDev(Rng)
 
 End Function
+
+Sub Refilter()
+
+    Worksheets("Rankings").Activate
+    
+    'Count the players
+    Dim PlayerCount As Integer
+    
+    PlayerCount = Cells(Rows.Count, "A").End(xlUp).Row - 1
+    
+    'Declare the arrays for player names and stats - the arrays will need to have enough space for all players
+    Dim PlayerName() As String
+    Dim PlayerTeam() As String
+    Dim PlayerPosition() As String
+    Dim PlayerGames() As Integer
+    Dim PlayerGoals() As Integer
+    Dim PlayerAssists() As Integer
+    Dim PlayerPlusMinus() As Integer
+    Dim PlayerSOG() As Integer
+    Dim PlayerPPPoints() As Integer
+    Dim PlayerHits() As Integer
+    Dim PlayerFPYear1() As Integer
+    Dim PlayerFPYear2() As Integer
+    Dim PlayerFPYear3() As Integer
+    Dim PlayerFPAverage() As Integer
+    Dim PlayerFPStdDev() As Integer
+    Dim PlayerPPPointsYear2() As Integer
+
+    ReDim PlayerName(PlayerCount)
+    ReDim PlayerTeam(PlayerCount)
+    ReDim PlayerPosition(PlayerCount)
+    ReDim PlayerGames(PlayerCount)
+    ReDim PlayerGoals(PlayerCount)
+    ReDim PlayerAssists(PlayerCount)
+    ReDim PlayerPlusMinus(PlayerCount)
+    ReDim PlayerSOG(PlayerCount)
+    ReDim PlayerPPPoints(PlayerCount)
+    ReDim PlayerHits(PlayerCount)
+    ReDim PlayerFPYear1(PlayerCount)
+    ReDim PlayerFPYear2(PlayerCount)
+    ReDim PlayerFPYear3(PlayerCount)
+    ReDim PlayerFPAverage(PlayerCount)
+    ReDim PlayerFPStdDev(PlayerCount)
+    ReDim PlayerPPPointsYear2(PlayerCount)
+    
+    'Loop through players and save their names and stats into arrays if their name is not highlighted yellow
+    Dim i As Integer
+    i = 0
+    
+    Cells(2, 1).Activate
+    
+    While ActiveCell.Value <> vbNullString
+        
+        If ActiveCell.Interior.Color <> vbYellow Then
+            
+            PlayerName(i) = ActiveCell.Value
+            PlayerTeam(i) = ActiveCell.Offset(0, 1).Value
+            PlayerPosition(i) = ActiveCell.Offset(0, 2).Value
+            PlayerGames(i) = ActiveCell.Offset(0, 3).Value
+            PlayerGoals(i) = ActiveCell.Offset(0, 4).Value
+            PlayerAssists(i) = ActiveCell.Offset(0, 5).Value
+            PlayerPlusMinus(i) = ActiveCell.Offset(0, 6).Value
+            PlayerSOG(i) = ActiveCell.Offset(0, 7).Value
+            PlayerPPPoints(i) = ActiveCell.Offset(0, 8).Value
+            PlayerHits(i) = ActiveCell.Offset(0, 9).Value
+            PlayerFPYear1(i) = ActiveCell.Offset(0, 10).Value
+            PlayerFPYear2(i) = ActiveCell.Offset(0, 11).Value
+            PlayerFPYear3(i) = ActiveCell.Offset(0, 12).Value
+            PlayerFPAverage(i) = ActiveCell.Offset(0, 13).Value
+            PlayerFPStdDev(i) = ActiveCell.Offset(0, 14).Value
+            
+            i = i + 1
+            
+        End If
+    
+        ActiveCell.Offset(1, 0).Activate
+        
+    Wend
+    
+    Cells(2, 1).Activate
+    
+    'Switch to RemainingPlayers tab and clear contents
+    Worksheets("RemainingPlayers").Activate
+    Cells.Clear
+    
+    'Create column headers for RemainingPlayers tab
+    Cells(1, 1).Value = "Name"
+    Cells(1, 2).Value = "Team"
+    Cells(1, 3).Value = "Position"
+    Cells(1, 4).Value = "Games"
+    Cells(1, 5).Value = "G"
+    Cells(1, 6).Value = "A"
+    Cells(1, 7).Value = "+/-"
+    Cells(1, 8).Value = "SOG"
+    Cells(1, 9).Value = "PPP"
+    Cells(1, 10).Value = "Hits"
+    Cells(1, 11).Value = "FP Year 1"
+    Cells(1, 12).Value = "FP Year 2"
+    Cells(1, 13).Value = "FP Year 3"
+    Cells(1, 14).Value = "FP Average"
+    Cells(1, 15).Value = "FP Std Dev"
+    Range("1:1").Rows.Font.Bold = True
+    
+    'Print names and average stats of all remaining players into RemainingPlayers tab
+    For i = 0 To (PlayerCount - 1)
+        
+        If PlayerName(i) <> vbNullString Then
+        
+            Cells(i + 2, 1).Value = PlayerName(i)
+            Cells(i + 2, 2).Value = PlayerTeam(i)
+            Cells(i + 2, 3).Value = PlayerPosition(i)
+            Cells(i + 2, 4).Value = PlayerGames(i)
+            Cells(i + 2, 5).Value = PlayerGoals(i)
+            Cells(i + 2, 6).Value = PlayerAssists(i)
+            Cells(i + 2, 7).Value = PlayerPlusMinus(i)
+            Cells(i + 2, 8).Value = PlayerSOG(i)
+            Cells(i + 2, 9).Value = PlayerPPPoints(i)
+            Cells(i + 2, 10).Value = PlayerHits(i)
+            Cells(i + 2, 11).Value = PlayerFPYear1(i)
+            Cells(i + 2, 12).Value = PlayerFPYear2(i)
+            Cells(i + 2, 13).Value = PlayerFPYear3(i)
+            Cells(i + 2, 14).Value = PlayerFPAverage(i)
+            Cells(i + 2, 15).Value = PlayerFPStdDev(i)
+            
+        End If
+    
+    Next i
+    
+    'Format values to one decimal point & AutoFit columns
+    Range("A:O").Columns.AutoFit
+    
+End Sub
