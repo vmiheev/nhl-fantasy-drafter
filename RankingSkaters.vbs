@@ -331,3 +331,38 @@ Sub Refilter()
     Range("A:O").Columns.AutoFit
     
 End Sub
+
+Sub LoadPlayerData()
+    
+    Dim FilePath As String
+    
+    FilePath = ThisWorkbook.Path & "\data\goalie_stats.csv"
+    
+    Open FilePath For Input As #1
+    
+    Worksheets("season1").Activate
+    Cells(1, 1).Activate
+    
+    Dim row_number As Integer
+    Dim LineFromFile As String
+    Dim LineItems(3) As String
+    
+    row_number = 0
+    
+    Do Until EOF(1)
+    
+        Line Input #1, LineFromFile
+        
+        LineItems = Split(LineFromFile, ",")
+        
+        ActiveCell.Offset(row_number, 0).Value = LineItems(0)
+        ActiveCell.Offset(row_number, 1).Value = LineItems(1)
+        ActiveCell.Offset(row_number, 2).Value = LineItems(2)
+        
+        row_number = row_number + 1
+        
+    Loop
+    
+    Close #1
+    
+End Sub
