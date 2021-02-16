@@ -101,6 +101,9 @@ Sub RankingSkaters()
                 PlayerSOGYear2(i) = Cells(j + 2, 10).Value
                 PlayerPPPointsYear2(i) = Cells(j + 2, 12).Value + Cells(j + 2, 13).Value
                 PlayerHitsYear2(i) = Cells(j + 2, 16).Value
+                
+                'If player matched and data captured, exit second loop and move on to matching next player
+                Exit For
             
             End If
             
@@ -130,6 +133,9 @@ Sub RankingSkaters()
                 PlayerSOGYear3(i) = Cells(j + 2, 10).Value
                 PlayerPPPointsYear3(i) = Cells(j + 2, 12).Value + Cells(j + 2, 13).Value
                 PlayerHitsYear3(i) = Cells(j + 2, 16).Value
+                
+                'If player matched and data captured, exit second loop and move on to matching next player
+                Exit For
                 
             End If
             
