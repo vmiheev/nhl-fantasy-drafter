@@ -2,7 +2,7 @@ Attribute VB_Name = "Module1"
 Option Explicit
 Sub RankingSkaters()
     
-    Worksheets("year1").Activate
+    Worksheets("Season1").Activate
     
     'Count the players from last year
     Dim PlayerCount As Integer
@@ -60,7 +60,7 @@ Sub RankingSkaters()
     ReDim PlayerPPPointsYear3(PlayerCount)
     ReDim PlayerHitsYear3(PlayerCount)
     
-    'Loop through players in the year1 worksheet and save their names and stats into arrays
+    'Loop through players in the Season1 worksheet and save their names and stats into arrays
     Dim i As Integer
     
     For i = 0 To (PlayerCount - 1)
@@ -79,7 +79,7 @@ Sub RankingSkaters()
     Next i
     
     'Count the players from year 2
-    Worksheets("year2").Activate
+    Worksheets("Season2").Activate
     
     Dim PlayerCount2 As Integer
     
@@ -109,7 +109,7 @@ Sub RankingSkaters()
     Next j
     
     'Count the players from year 3
-    Worksheets("year3").Activate
+    Worksheets("Season3").Activate
     
     Dim PlayerCount3 As Integer
     
@@ -151,9 +151,9 @@ Sub RankingSkaters()
     Cells(1, 8).Value = "SOG"
     Cells(1, 9).Value = "PPP"
     Cells(1, 10).Value = "Hits"
-    Cells(1, 11).Value = "FP Year 1"
-    Cells(1, 12).Value = "FP Year 2"
-    Cells(1, 13).Value = "FP Year 3"
+    Cells(1, 11).Value = "FP Season 1"
+    Cells(1, 12).Value = "FP Season 2"
+    Cells(1, 13).Value = "FP Season 3"
     Cells(1, 14).Value = "Weighted FP"
     Cells(1, 15).Value = "FP Std Dev"
     Range("1:1").Rows.Font.Bold = True
@@ -173,9 +173,9 @@ Sub RankingSkaters()
         Cells(i + 2, 10).Value = PlayerHitsYear1(i) * 0.5 + PlayerHitsYear2(i) * 0.3 + PlayerHitsYear3(i) * 0.2
         
         'Print fantasy point calculations for each year, then the average and standard deviation
-        Cells(i + 2, 11).Value = PlayerGoalsYear1(i) * Sheets("Info").Cells(16, 1).Value + PlayerAssistsYear1(i) * Sheets("Info").Cells(16, 2).Value + PlayerPlusMinusYear1(i) * Sheets("Info").Cells(16, 3).Value + PlayerSOGYear1(i) * Sheets("Info").Cells(16, 4).Value + PlayerPPPointsYear1(i) * Sheets("Info").Cells(16, 5).Value + PlayerHitsYear1(i) * Sheets("Info").Cells(16, 6).Value
-        Cells(i + 2, 12).Value = PlayerGoalsYear2(i) * Sheets("Info").Cells(16, 1).Value + PlayerAssistsYear2(i) * Sheets("Info").Cells(16, 2).Value + PlayerPlusMinusYear2(i) * Sheets("Info").Cells(16, 3).Value + PlayerSOGYear2(i) * Sheets("Info").Cells(16, 4).Value + PlayerPPPointsYear2(i) * Sheets("Info").Cells(16, 5).Value + PlayerHitsYear2(i) * Sheets("Info").Cells(16, 6).Value
-        Cells(i + 2, 13).Value = PlayerGoalsYear3(i) * Sheets("Info").Cells(16, 1).Value + PlayerAssistsYear3(i) * Sheets("Info").Cells(16, 2).Value + PlayerPlusMinusYear3(i) * Sheets("Info").Cells(16, 3).Value + PlayerSOGYear3(i) * Sheets("Info").Cells(16, 4).Value + PlayerPPPointsYear3(i) * Sheets("Info").Cells(16, 5).Value + PlayerHitsYear3(i) * Sheets("Info").Cells(16, 6).Value
+        Cells(i + 2, 11).Value = PlayerGoalsYear1(i) * Sheets("Info").Cells(19, 1).Value + PlayerAssistsYear1(i) * Sheets("Info").Cells(19, 2).Value + PlayerPlusMinusYear1(i) * Sheets("Info").Cells(19, 3).Value + PlayerSOGYear1(i) * Sheets("Info").Cells(19, 4).Value + PlayerPPPointsYear1(i) * Sheets("Info").Cells(19, 5).Value + PlayerHitsYear1(i) * Sheets("Info").Cells(19, 6).Value
+        Cells(i + 2, 12).Value = PlayerGoalsYear2(i) * Sheets("Info").Cells(19, 1).Value + PlayerAssistsYear2(i) * Sheets("Info").Cells(19, 2).Value + PlayerPlusMinusYear2(i) * Sheets("Info").Cells(19, 3).Value + PlayerSOGYear2(i) * Sheets("Info").Cells(19, 4).Value + PlayerPPPointsYear2(i) * Sheets("Info").Cells(19, 5).Value + PlayerHitsYear2(i) * Sheets("Info").Cells(19, 6).Value
+        Cells(i + 2, 13).Value = PlayerGoalsYear3(i) * Sheets("Info").Cells(19, 1).Value + PlayerAssistsYear3(i) * Sheets("Info").Cells(19, 2).Value + PlayerPlusMinusYear3(i) * Sheets("Info").Cells(19, 3).Value + PlayerSOGYear3(i) * Sheets("Info").Cells(19, 4).Value + PlayerPPPointsYear3(i) * Sheets("Info").Cells(19, 5).Value + PlayerHitsYear3(i) * Sheets("Info").Cells(19, 6).Value
         Cells(i + 2, 14).Value = Cells(i + 2, 11).Value * 0.5 + Cells(i + 2, 12).Value * 0.3 + Cells(i + 2, 13).Value * 0.2
         Cells(i + 2, 15).Value = StDev(Range(Cells(i + 2, 11), Cells(i + 2, 13)))
     
@@ -295,9 +295,9 @@ Sub Refilter()
     Cells(1, 8).Value = "SOG"
     Cells(1, 9).Value = "PPP"
     Cells(1, 10).Value = "Hits"
-    Cells(1, 11).Value = "FP Year 1"
-    Cells(1, 12).Value = "FP Year 2"
-    Cells(1, 13).Value = "FP Year 3"
+    Cells(1, 11).Value = "FP Season 1"
+    Cells(1, 12).Value = "FP Season 2"
+    Cells(1, 13).Value = "FP Season 3"
     Cells(1, 14).Value = "Weighted FP"
     Cells(1, 15).Value = "FP Std Dev"
     Range("1:1").Rows.Font.Bold = True
@@ -327,7 +327,7 @@ Sub Refilter()
     
     Next i
     
-    'Format values to one decimal point & AutoFit columns
+    'AutoFit columns
     Range("A:O").Columns.AutoFit
     
 End Sub
@@ -336,33 +336,74 @@ Sub LoadPlayerData()
     
     Dim FilePath As String
     
+    ' Pull stats for currently active goalies from last season
     FilePath = ThisWorkbook.Path & "\data\goalie_stats.csv"
     
-    Open FilePath For Input As #1
+    PullData FilePath, "Goalies"
     
-    Worksheets("season1").Activate
+    ' Pull stats for currently active skaters from last season
+    FilePath = ThisWorkbook.Path & "\data\skater_stats_season1.csv"
+    
+    PullData FilePath, "Season1"
+    
+    ' Pull stats for currently active skaters from second last season
+    FilePath = ThisWorkbook.Path & "\data\skater_stats_season2.csv"
+    
+    PullData FilePath, "Season2"
+    
+    ' Pull stats for currently active skaters from 3 seasons ago
+    FilePath = ThisWorkbook.Path & "\data\skater_stats_season3.csv"
+    
+    PullData FilePath, "Season3"
+    
+    Worksheets("Info").Activate
+    
+End Sub
+
+' Creating function that pastes specified CSV into worksheet
+Function PullData(FilePath As String, SheetName As String)
+    
+    ' Activate worksheet that data will be loaded into
+    Worksheets(SheetName).Activate
+    Cells.Clear
     Cells(1, 1).Activate
     
+    ' Open file path of specified CSV file
+    Open FilePath For Input As #1
+    
+    ' Declaring variables for looping through file
     Dim row_number As Integer
+    Dim ArrayLen As Integer
+    Dim i As Integer
     Dim LineFromFile As String
-    Dim LineItems(3) As String
+    Dim LineValues() As String
     
     row_number = 0
     
+    ' Initialize loop until end of specified file
     Do Until EOF(1)
-    
+        
+        ' Loop through lines in file and assign to variable 'LineFromFile'
         Line Input #1, LineFromFile
         
-        LineItems = Split(LineFromFile, ",")
+        ' Split line variable by commas and assign values to array
+        LineValues = Split(LineFromFile, ",")
         
-        ActiveCell.Offset(row_number, 0).Value = LineItems(0)
-        ActiveCell.Offset(row_number, 1).Value = LineItems(1)
-        ActiveCell.Offset(row_number, 2).Value = LineItems(2)
+        ' Get array length
+        ArrayLen = UBound(LineValues) - LBound(LineValues) + 1
+        
+        ' Copy over each value from line into worksheet
+        For i = 0 To (ArrayLen - 1)
+            
+            ActiveCell.Offset(row_number, i).Value = LineValues(i)
+            
+        Next i
         
         row_number = row_number + 1
         
     Loop
     
+    ' Close CSV file
     Close #1
     
-End Sub
+End Function
